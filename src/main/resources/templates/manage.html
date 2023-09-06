@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org" lang="en">
+	<head>
+	  <div th:replace="fragments/header-fragment::header"></div>
+	</head>
+	<div th:replace="fragments/navbar-fragment::navigation"></div>
+	<body>
+		<div class="container mt-4 rounded">
+			<div class="row">
+				<button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#create">
+				  Create Product
+				</button>
+				
+				<!-- Create Product Modal -->
+				<form class="form" action="#" th:action="@{/createProduct}" th:object="${productModel}" method="post">
+					<div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Create Product</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">	
+						      <div class="form__group">
+						        <input type="text" placeholder="Product Name" th:field="*{name}" class="mt-2 w-100" />
+						        <textarea placeholder="Product Description" th:field="*{description}" class="mt-2 w-100"></textarea>	   					     
+						        <input type="number" placeholder="Product Price" th:field="*{price}" class="mt-2 w-100" />
+						        <input type="text" placeholder="Product Photo" th:field="*{photo}" class="mt-2 w-100" />
+								<button class="btn btn-primary w-100 mt-2" type="submit">Create Product</button>
+						      </div>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+				  <div th:if="${#fields.hasErrors('*')}">List of Errors</div>
+				  <div th:each="err : ${#fields.errors('*')}">
+				    <span style="color:red" th:text="${err}" class="fieldError"></span>
+				  </div>
+			    </form>
+			</div>
+			
+			<div class="row">
+		      <div class="col-sm-12 d-flex justify-content-center">
+		        <h1>Search Products to Manage</h1>
+		      </div>
+			</div>
+			<div class="row d-flex justify-content-center">
+		        <form th:action="@{/manage}" th:object="${searchform}" class="text-center">
+		          	  <input type="search" id="search" name="search" class="col-sm-6" placeholder="Search" />
+		              <button class="btn btn-primary col-sm-3" type="submit">Search</button>
+		        </form>
+		    </div>
+		    
+		    
+		   	<div class="row mt-4">
+			    <div th:each="product : ${session.products}" class="col-med-6 col-lg-3 mb-4 d-inline-flex">
+					<div class="card" style="width: 18rem;">
+					  <img th:src="${'/img/products/'+product.photo}" class="card-img-top" alt="productPhoto">
+					  <div class="card-body">
+					    <h5 class="card-title" th:text="${product.name}">Card title</h5>
+					    <p th:text="${'Item Number: '+product.itemNumber}">Item Number</p>
+					    <p class="card-text text-truncate" th:text="${product.description}">Description</p>
+					    <p class="card-text" th:text="${'Price : $'+(#numbers.formatDecimal((product.price*1.0)/100, 0,'COMMA', 2,'POINT'))}">Price</p>
+					    <div class="row mt-auto no-gutters">
+		    				<button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="" th:attr="data-bs-target=${'#details'+product.itemNumber}">
+							  Details
+							</button>
+						    <a class="btn btn-danger w-50" th:href="@{/delete(productid=${product.itemNumber})}">Delete</a>
+						    
+	   				        <button type="button" class="btn btn-warning w-50" data-bs-toggle="modal" data-bs-target="" th:attr="data-bs-target=${'#update'+product.itemNumber}">
+							  Update
+							</button>
+	   				        
+						</div>
+					  </div>
+					</div>
+					
+					<div class="modal fade" id="" th:attr="id=${'details'+product.itemNumber}" tabindex="-1" aria-labelledby="ProductDetails" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Product Details</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+   							<p th:text="${'Item Number: '+product.itemNumber}"></p>
+							<p th:text="${'Product Name: '+product.name}"></p>
+							<p th:text="${'Product Description: '+product.description}"></p>
+							<p th:text="${'Price: $'(#numbers.formatDecimal((product.price*1.0)/100, 0,'COMMA', 2,'POINT'))}"></p>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					
+				   <form class="form" action="#" th:action="@{/updateProduct}" th:object="${productModel}" method="post">
+					<div class="modal fade" id="" th:attr="id=${'update'+product.itemNumber}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">	
+						      <div class="form__group">
+								<input type="number" placeholder="Item Number" th:value="${product.itemNumber}" id="itemNumber" name="itemNumber" class="mt-2 w-100" />
+						        <input type="text" placeholder="Product Name" th:value="${product.name}" id="name" name="name" class="mt-2 w-100" />
+						        <textarea placeholder="Description" id="description" name="description" class="mt-2 w-100"><div th:text="${product.description}" th:remove="tag"></div></textarea>
+						        <input type="number" placeholder="Product Price" th:value="${product.price}" id="price" name="price" class="mt-2 w-100" />
+	   					        <input type="text" placeholder="Product Photo" th:value="${product.photo}" id="photo" name="photo" class="mt-2 w-100" />
+	   					        	   					        
+								<button class="btn btn-primary w-100 mt-2" type="submit">Update Product</button>
+						      </div>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+			       </form>
+				</div>    
+    		</div>
+		</div>
+	</body>
+
+</html>

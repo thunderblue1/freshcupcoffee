@@ -1,0 +1,26 @@
+.container {
+	background-color:ghostwhite;
+}
+
+#loginbackdrop {
+	background-image: url("/img/LoginBackground.jpg");
+}
+
+.white {
+	background-color:ghostwhite;	
+	padding: 15px;
+}
+
+.thankyou {
+	background: url('/img/ThankYouBackground.jpg'), darkseagreen;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+html {
+	background-color:skyblue;
+}
+
+body {
+	background-color:transparent;
+}

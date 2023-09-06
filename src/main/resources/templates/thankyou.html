@@ -1,0 +1,26 @@
+<html class="thankyou">
+	<head>
+	  <div th:replace="fragments/header-fragment::header"></div>
+	</head>
+	<div th:replace="fragments/navbar-fragment::navigation"></div>
+	<body>
+		<div class="container mt-5 rounded">
+			<div class="row">
+		      <div class="col-sm-12 d-flex justify-content-center">
+		        <h1 class="white rounded">Thank You For Your Purchase</h1>
+		      </div>
+			</div>
+			
+			<p>Receipt Number: <span th:text="${purchase.purchaseNumber}"></span></p>
+			<p>Total price: <span th:text="${(#numbers.formatDecimal((purchase.totalPrice*1.0)/100, 0,'COMMA', 2,'POINT'))}"></span></p>
+			<p>Orders:
+				<ul>
+					<li th:each="order : ${orderlist}">
+						<span th:text="${order.name}"></span>, Quantity: <span th:text="${order.quantity}"></span>
+					</li>
+				</ul>
+			</p>
+		</div>
+	</body>
+
+</html>

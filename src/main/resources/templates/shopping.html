@@ -1,0 +1,62 @@
+<html>
+	<head>
+	  <div th:replace="fragments/header-fragment::header"></div>
+	</head>
+	<div th:replace="fragments/navbar-fragment::navigation"></div>
+	<body>
+		<div class="container mt-4 rounded">
+			<div class="row">
+		      <div class="col-sm-12 d-flex justify-content-center">
+		        <h1>Search for Drinks</h1>
+		      </div>
+			</div>
+			<div class="row d-flex justify-content-center">
+		        <form th:action="@{/shopping}" th:object="${searchform}" class="text-center">
+		          	  <input type="search" id="search" name="search" class="col-sm-6" placeholder="Search" />
+		              <button class="btn btn-primary col-sm-3" type="submit">Search</button>
+		        </form>
+		    </div>
+		    
+		   	<div class="row mt-4">
+			    <div th:each="product : ${session.products}" class="col-med-6 col-lg-3 mb-4 d-inline-flex">
+					<div class="card" style="width: 18rem;">
+					  <img th:src="${'/img/products/'+product.photo}" class="card-img-top" alt="productPhoto">
+					  <div class="card-body">
+					    <h5 class="card-title" th:text="${product.name}">Card title</h5>
+					    <p th:text="${'Item Number: '+product.itemNumber}">Item Number</p>
+					    <p class="card-text text-truncate" th:text="${product.description}">Description</p>
+					    <p class="card-text" th:text="${'Price : $'+(#numbers.formatDecimal((product.price*1.0)/100, 0,'COMMA', 2,'POINT'))}">Price</p>
+					    <div class="row mt-auto no-gutters">
+		    				<button type="button" class="btn btn-primary w-50" data-bs-toggle="modal" data-bs-target="" th:attr="data-bs-target=${'#details'+product.itemNumber}">
+							  Details
+							</button>
+						    <a class="btn btn-success w-50" th:href="@{/addToCart(productid=${product.itemNumber})}">Add To Cart</a>
+						    	   				        
+						</div>
+					  </div>
+					</div>
+					
+					<div class="modal fade" id="" th:attr="id=${'details'+product.itemNumber}" tabindex="-1" aria-labelledby="ProductDetails" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Product Details</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+   							<p th:text="${'Item Number: '+product.itemNumber}"></p>
+							<p th:text="${'Product Name: '+product.name}"></p>
+							<p th:text="${'Product Description: '+product.description}"></p>
+							<p th:text="${'Price: $'+(#numbers.formatDecimal((product.price*1.0)/100, 0,'COMMA', 2,'POINT'))}"></p>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+	
+				</div>
+				
+    		</div>
+		</div>
+	</body>
+
+</html>
