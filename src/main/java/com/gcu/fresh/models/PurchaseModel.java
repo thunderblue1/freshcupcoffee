@@ -34,9 +34,9 @@ public class PurchaseModel {
 	private Integer totalPrice;
 	
 	@Column("table_number")
-	@NotNull(message="Price is a required field")
-    @Min(message="Price in pennies must be between 1 and 1,000,000,000", value = 0)
-    @Max(message="Price in pennies must be between 1 and 1,000,000,000", value = 1000000000)
+	@NotNull(message="Table number is a required field")
+    @Min(message="Table number must be between 1 and 200", value = 0)
+    @Max(message="Table number must be between 1 and 200", value = 200)
 	private Integer tableNumber;
 
 	public PurchaseModel() {
