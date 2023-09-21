@@ -3,6 +3,7 @@ package com.gcu.fresh.models;
 public class OrderModel {
 	private Long itemNumber;	
 	private Long purchaseNumber;
+	private Long orderNumber;
 	private Integer quantity;
 	private String name;
 	private String description;
@@ -80,6 +81,12 @@ public class OrderModel {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	
-	
+
+	public Long getOrderNumber() {
+		return orderNumber;
+	}
+
+	public void setOrderNumber(Long orderNumber) {
+		this.orderNumber = orderNumber;
+	}
 }

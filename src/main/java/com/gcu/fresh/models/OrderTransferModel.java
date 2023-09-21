@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("order")
+@Table("single_order")
 public class OrderTransferModel {
 	@Column("order_number")
 	@Id
@@ -18,6 +18,10 @@ public class OrderTransferModel {
 	
 	@Column("quantity")
 	private Integer quantity;
+	
+	public OrderTransferModel() {
+		super();
+	}
 
 	public OrderTransferModel(Long itemNumber, Long purchaseNumber, Integer quantity) {
 		super();
@@ -26,11 +30,44 @@ public class OrderTransferModel {
 		this.quantity = quantity;
 	}
 	
-	public OrderTransferModel(Long orderNumber, Long itemNumber, Long purchaseNumber, Integer quantity) {
+	public OrderTransferModel(Long orderNumber, Long purchaseNumber, Long itemNumber, Integer quantity) {
 		super();
 		this.orderNumber = orderNumber;
 		this.itemNumber = itemNumber;
 		this.purchaseNumber = purchaseNumber;
 		this.quantity = quantity;
 	}
+
+	public Long getOrderNumber() {
+		return orderNumber;
+	}
+
+	public void setOrderNumber(Long orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
+	public Long getItemNumber() {
+		return itemNumber;
+	}
+
+	public void setItemNumber(Long itemNumber) {
+		this.itemNumber = itemNumber;
+	}
+
+	public Long getPurchaseNumber() {
+		return purchaseNumber;
+	}
+
+	public void setPurchaseNumber(Long purchaseNumber) {
+		this.purchaseNumber = purchaseNumber;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+	
 }
