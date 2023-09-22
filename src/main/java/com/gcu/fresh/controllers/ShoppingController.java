@@ -125,12 +125,17 @@ public class ShoppingController {
 		@SuppressWarnings("unchecked")
 		List<OrderModel> shoppingcart = (List<OrderModel>) session.getAttribute("shoppingcart");
 		
+		OrderModel found = new OrderModel();
+		boolean inside = false;
 		for(OrderModel order : shoppingcart) {
 			if(order.getItemNumber()==productid) {
-				shoppingcart.remove(order);
-			}
+				found = order;
+				inside = true;
+			}	
 		}
-		
+		if(inside) {
+			shoppingcart.remove(found);
+		}
 		session.setAttribute("shoppingcart", shoppingcart);
 		model.addAttribute("purchaseModel",new PurchaseModel());
 		return "shoppingcart";
@@ -141,14 +146,20 @@ public class ShoppingController {
 		@SuppressWarnings("unchecked")
 		List<OrderModel> shoppingcart = (List<OrderModel>) session.getAttribute("shoppingcart");
 		
+		OrderModel found = new OrderModel();
+		boolean inside = false;
 		for(OrderModel order : shoppingcart) {
 			if(order.getItemNumber()==productid) {
 				if(order.getQuantity()>1) {
 					order.setQuantity(order.getQuantity()-1);
 				} else {
-					shoppingcart.remove(order);					
+					found = order;
+					inside=true;
 				}
 			}
+		}
+		if(inside) {
+			shoppingcart.remove(found);
 		}
 		model.addAttribute("purchaseModel",new PurchaseModel());
 		return "shoppingcart";
