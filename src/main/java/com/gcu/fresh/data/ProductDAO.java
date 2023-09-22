@@ -33,8 +33,9 @@ public class ProductDAO implements ProductAccessInterface<ProductModel> {
 
 	@Override
 	public List<ProductModel> findProductsAsList(String searchcriteria) {
-		String sql = "SELECT * FROM item WHERE LOWER(name) LIKE '%"+searchcriteria.toLowerCase()+"%' || LOWER(description) LIKE '%"+searchcriteria.toLowerCase()+"%'|| LOWER(price) LIKE '%"+searchcriteria.toLowerCase()+"%'";
-		List<ProductModel> found = jtemp.query(sql, new ProductRowMapper());
+		String sql = "SELECT * FROM item WHERE LOWER(name) LIKE ? || LOWER(description) LIKE ? || LOWER(price) LIKE ?";
+		String searchParam = '%'+searchcriteria.toLowerCase()+'%';
+		List<ProductModel> found = jtemp.query(sql, new ProductRowMapper(),searchParam, searchParam, searchParam);
 		return found;
 	}
 
