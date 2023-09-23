@@ -31,10 +31,10 @@ public class LoginDataService implements LoginAccessInterface {
     //Verifies that the user-name and password exists
     public void login(String username)
     {
-        String sql = "SELECT * FROM user WHERE username = \"" + username+"\"";
+        String sql = "SELECT * FROM user WHERE username = ?";
                 
         //Map user data to Model
-        List<UserModel> umlist = jdbcTemplate.query(sql, new UserRowMapper());
+        List<UserModel> umlist = jdbcTemplate.query(sql, new UserRowMapper(), username);
         
         //Set model as attribute for session
         session.setAttribute("user",umlist.get(0));
