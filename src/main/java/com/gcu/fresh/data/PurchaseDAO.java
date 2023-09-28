@@ -32,8 +32,9 @@ public class PurchaseDAO implements PurchaseAccessInterface<PurchaseModel> {
 
 	@Override
 	public List<PurchaseModel> findPurchasesAsList(String searchcriteria) {
-		String sql = "SELECT * FROM item WHERE LOWER(name) LIKE '%"+searchcriteria.toLowerCase()+"%' || LOWER(description) LIKE '%"+searchcriteria.toLowerCase()+"%'|| LOWER(price) LIKE '%"+searchcriteria.toLowerCase()+"%'";
-		List<PurchaseModel> found = jtemp.query(sql, new PurchaseRowMapper());
+		String sql = "SELECT * FROM item WHERE LOWER(name) LIKE ? || LOWER(description) LIKE ? || LOWER(price) LIKE ? ";
+		String searchParam = '%'+searchcriteria.toLowerCase()+'%';
+		List<PurchaseModel> found = jtemp.query(sql, new PurchaseRowMapper(),searchParam, searchParam, searchParam);
 		return found;
 	}
 
