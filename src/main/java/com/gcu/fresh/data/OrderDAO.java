@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.gcu.fresh.models.OrderModel;
 import com.gcu.fresh.models.OrderTransferModel;
 import com.gcu.fresh.models.ProductModel;
+import com.gcu.fresh.models.PurchaseModel;
 import com.gcu.fresh.repository.OrderRepository;
 import com.gcu.fresh.repository.ProductRepository;
+import com.gcu.fresh.repository.PurchaseRepository;
 
 @Service
 public class OrderDAO implements OrderAccessInterface<OrderModel> {
@@ -24,6 +26,9 @@ public class OrderDAO implements OrderAccessInterface<OrderModel> {
 	
 	@Autowired
 	OrderRepository orderRepo;
+	
+	@Autowired
+	PurchaseRepository purchRepo;
 	
 	@Override
 	public OrderModel getOrderById(Long id) {
@@ -41,6 +46,11 @@ public class OrderDAO implements OrderAccessInterface<OrderModel> {
 				ProductModel d = details.get();
 				OrderModel composed = new OrderModel(g.getItemNumber(),g.getPurchaseNumber(),g.getQuantity(),d.getName(),d.getDescription(),d.getPrice(),d.getPhoto());	
 				composed.setOrderNumber(g.getOrderNumber());
+				Optional<PurchaseModel> purchase = purchRepo.findById(g.getPurchaseNumber());
+				if(purchase.isPresent()) {
+					PurchaseModel purch = purchase.get();
+					composed.setTableNumber(purch.getTableNumber());
+				}
 				made.add(composed);
 			}
 		}
@@ -63,6 +73,11 @@ public class OrderDAO implements OrderAccessInterface<OrderModel> {
 				ProductModel d = details.get();
 				OrderModel composed = new OrderModel(g.getItemNumber(),g.getPurchaseNumber(),g.getQuantity(),d.getName(),d.getDescription(),d.getPrice(),d.getPhoto());	
 				composed.setOrderNumber(g.getOrderNumber());
+				Optional<PurchaseModel> purchase = purchRepo.findById(g.getPurchaseNumber());
+				if(purchase.isPresent()) {
+					PurchaseModel purch = purchase.get();
+					composed.setTableNumber(purch.getTableNumber());
+				}
 				if(composed.getItemNumber().toString().toLowerCase().matches("(.*)"+searchterm.toLowerCase()+"(.*)")||
 					composed.getPurchaseNumber().toString().toLowerCase().matches("(.*)"+searchterm.toLowerCase()+"(.*)")||
 					composed.getQuantity().toString().toLowerCase().matches("(.*)"+searchterm.toLowerCase()+"(.*)")||

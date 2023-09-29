@@ -1,9 +1,10 @@
 package com.gcu.fresh.models;
 
 public class OrderModel {
-	private Long itemNumber;	
+	private Long itemNumber;
 	private Long purchaseNumber;
 	private Long orderNumber;
+	private Integer tableNumber;
 	private Integer quantity;
 	private String name;
 	private String description;
@@ -24,6 +25,7 @@ public class OrderModel {
 		this.description = description;
 		this.price = price;
 		this.photo = photo;
+		this.tableNumber = 0;
 	}
 
 	public Long getItemNumber() {
@@ -88,5 +90,12 @@ public class OrderModel {
 
 	public void setOrderNumber(Long orderNumber) {
 		this.orderNumber = orderNumber;
+	}
+	
+	public Integer getTableNumber() {
+		return tableNumber;
+	}
+	public void setTableNumber(Integer tableNumber) {
+		this.tableNumber = tableNumber;
 	}
 }

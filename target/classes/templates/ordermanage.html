@@ -49,6 +49,7 @@
    							<p th:text="${'Item Number: '+order.itemNumber}"></p>
 							<p th:text="${'Product Name: '+order.name}"></p>
 							<p th:text="${'Quantity: '+order.quantity}"></p>
+							<p th:text="${'Table Number: '+order.tableNumber}"></p>
 							<p th:text="${'Product Description: '+order.description}"></p>
 							<p th:text="${'Price per drink: $'+(#numbers.formatDecimal((order.price*1.0)/100, 0,'COMMA', 2,'POINT'))}"></p>
 					      </div>
