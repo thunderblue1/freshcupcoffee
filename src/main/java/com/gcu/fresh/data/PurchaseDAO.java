@@ -26,6 +26,7 @@ public class PurchaseDAO implements PurchaseAccessInterface<PurchaseModel> {
 	@Autowired
 	JdbcTemplate jtemp;
 	
+	//Get purchase from database based on id	
 	@Override
 	public PurchaseModel findPurchase(Long id) {
 		Optional<PurchaseModel> gotten = purchRepo.findById(id);
@@ -36,12 +37,14 @@ public class PurchaseDAO implements PurchaseAccessInterface<PurchaseModel> {
 		}
 	}
 
+	//Get purchases from database as a list based on search criteria
 	@Override
 	public List<PurchaseModel> findPurchasesAsList(String searchcriteria) {
 		logger.info(MessUtil.enter("findPurchasesAsList"));
 		String sql = "SELECT * FROM item WHERE LOWER(name) LIKE ? || LOWER(description) LIKE ? || LOWER(price) LIKE ? ";
 		String searchParam = '%'+searchcriteria.toLowerCase()+'%';
 		try {
+			//If products were found based on SQL query then return them as a list
 			List<PurchaseModel> found = jtemp.query(sql, new PurchaseRowMapper(),searchParam, searchParam, searchParam);
 			logger.info(MessUtil.exit("findPurchasesAsList"));
 			return found;	
@@ -53,10 +56,12 @@ public class PurchaseDAO implements PurchaseAccessInterface<PurchaseModel> {
 		return null;
 	}
 
+	//Get all purchases from database and return them as a list
 	@Override
 	public List<PurchaseModel> getPurchases() {
 		logger.info(MessUtil.enter("getPurchases"));
 		try {
+			//Get all products from database and return them as a list
 			List<PurchaseModel> gotten = (List<PurchaseModel>)purchRepo.findAll();
 			logger.info(MessUtil.exit("getPurchases"));
 			return gotten;
@@ -67,7 +72,8 @@ public class PurchaseDAO implements PurchaseAccessInterface<PurchaseModel> {
 		logger.info(MessUtil.exit("getPurchases"));
 		return null;
 	}
-
+	
+	//Create a purchase
 	@Override
 	public void createPurchase(PurchaseModel obj) {
 		logger.info(MessUtil.enter("createPurchase"));
@@ -79,7 +85,8 @@ public class PurchaseDAO implements PurchaseAccessInterface<PurchaseModel> {
 		}
 		logger.info(MessUtil.exit("createPurchase"));
 	}
-
+	
+	//Delete a purchase
 	@Override
 	public void deletePurchase(PurchaseModel obj) {
 		logger.info(MessUtil.enter("deletePurchase"));

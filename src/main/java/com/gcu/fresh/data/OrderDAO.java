@@ -37,19 +37,23 @@ public class OrderDAO implements OrderAccessInterface<OrderModel> {
 	@Autowired
 	PurchaseRepository purchRepo;
 	
+	//Get an order by the id
 	@Override
 	public OrderModel getOrderById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	//Return all orders in database
 	@Override
 	public List<OrderModel> getOrders() {
 		logger.info(MessUtil.enter("getOrders"));
 		List<OrderModel> made = new ArrayList<OrderModel>();
 		try {
+			//Get orders from database as OrderTransferModel
 			List<OrderTransferModel> gotten = (List<OrderTransferModel>) orderRepo.findAll();
 			
+			//Make the OrderTransferModel an OrderModel
 			for (OrderTransferModel g: gotten) {
 				Optional<ProductModel> details = productRepo.findById(g.getItemNumber());
 				if(details.isPresent()) {
@@ -72,19 +76,23 @@ public class OrderDAO implements OrderAccessInterface<OrderModel> {
 		return made;
 	}
 
+	//Get the orders in database by purchase number
 	@Override
 	public List<OrderModel> getOrdersByPurchaseNumber() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	//Find the orders by based on searchterm and return then as a list
 	@Override
 	public List<OrderModel> findOrdersAsList(String searchterm) {
 		logger.info(MessUtil.enter("findOrdersAsList"));
 		List<OrderModel> made = new ArrayList<OrderModel>();
 		try {
+			//Get all orders from the database as OrderTransferModel
 			List<OrderTransferModel> gotten = (List<OrderTransferModel>) orderRepo.findAll();
 			
+			//Make the OrderTransferModel an OrderModel and check to see if it matches the search criteria
 			for (OrderTransferModel g: gotten) {
 				Optional<ProductModel> details = productRepo.findById(g.getItemNumber());
 				if(details.isPresent()) {
@@ -96,6 +104,7 @@ public class OrderDAO implements OrderAccessInterface<OrderModel> {
 						PurchaseModel purch = purchase.get();
 						composed.setTableNumber(purch.getTableNumber());
 					}
+					//If the order matches the search criteria then add it to be returned
 					if(composed.getItemNumber().toString().toLowerCase().matches("(.*)"+searchterm.toLowerCase()+"(.*)")||
 						composed.getPurchaseNumber().toString().toLowerCase().matches("(.*)"+searchterm.toLowerCase()+"(.*)")||
 						composed.getQuantity().toString().toLowerCase().matches("(.*)"+searchterm.toLowerCase()+"(.*)")||
@@ -116,6 +125,7 @@ public class OrderDAO implements OrderAccessInterface<OrderModel> {
 		return made;
 	}
 
+	//Delete an order by the order number
 	@Override
 	public void deleteOrder(Long orderNumber) {
 		logger.info(MessUtil.enter("deleteOrder"));

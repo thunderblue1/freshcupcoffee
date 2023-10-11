@@ -15,12 +15,9 @@ public class AboutController {
 
 		public static Logger logger = LoggerFactory.getLogger(AboutController.class);
 	
+		//Simply return the about page
 		@RequestMapping({"/","about"})
 		public String index() {
-			//BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-			//String bCryptedPassword = bCryptPasswordEncoder.encode("pass");
-			//System.out.println(bCryptedPassword);
-			
 			logger.info(MessUtil.enter("index", "/ and about"));
 			logger.info(MessUtil.exitLoading("index","/ and about","about"));
 			return "about";

@@ -27,11 +27,13 @@ public class ProductDAO implements ProductAccessInterface<ProductModel> {
 	@Autowired
 	ProductRepository prodRepo;
 	
+	//Get a product as a ProductModel from database based on the id
 	@Override
 	public ProductModel findProduct(Long id) {
 		logger.info(MessUtil.enter("findProduct"));
 		try {
 			Optional<ProductModel> gotten = prodRepo.findById(id);
+			//If we found the product by id then return it
 			if(gotten.isPresent()) {
 				logger.info(MessUtil.exit("findProduct"));
 				return gotten.get();
@@ -44,13 +46,15 @@ public class ProductDAO implements ProductAccessInterface<ProductModel> {
 		}
 		return null;
 	}
-
+	
+	//Get a list of products matching the search criteria
 	@Override
 	public List<ProductModel> findProductsAsList(String searchcriteria) {
 		logger.info(MessUtil.enter("findProductAsList"));
 		String sql = "SELECT * FROM item WHERE LOWER(name) LIKE ? || LOWER(description) LIKE ? || LOWER(price) LIKE ?";
 		String searchParam = '%'+searchcriteria.toLowerCase()+'%';
 		try {
+			//If we find products as list using query then return them
 			List<ProductModel> found = jtemp.query(sql, new ProductRowMapper(),searchParam, searchParam, searchParam);	
 			logger.info(MessUtil.exit("findProductsAsList"));
 			return found;
@@ -61,6 +65,7 @@ public class ProductDAO implements ProductAccessInterface<ProductModel> {
 		return null;
 	}
 
+	//Get all products from the database
 	@Override
 	public List<ProductModel> getProducts() {
 		logger.info(MessUtil.enter("getProducts"));
@@ -74,6 +79,7 @@ public class ProductDAO implements ProductAccessInterface<ProductModel> {
 		return null;
 	}
 
+	//Create a product
 	@Override
 	public void createProduct(ProductModel obj) {
 		logger.info(MessUtil.enter("createProduct"));
@@ -85,6 +91,7 @@ public class ProductDAO implements ProductAccessInterface<ProductModel> {
 		}
 	}
 
+	//Delete a product
 	@Override
 	public void deleteProduct(ProductModel obj) {
 		logger.info(MessUtil.enter("deleteProduct"));

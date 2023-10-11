@@ -32,9 +32,13 @@ public class OrderController {
 	@Autowired
 	OrderAccessInterface<OrderModel> oai;
 	
+	//Return the ordermanage page with orders based on property value of searchform
 	@RequestMapping("ordermanage")
 	public String order(Model model,  @ModelAttribute("searchform") SearchForm searchform) {
 		logger.info(MessUtil.enter("order","ordermanage"));
+		//If there is no search value in search form then
+		//fill ordercart with all orders or fill ordercart with orders that match
+		//search if there was a search
 		if(searchform.getSearch()==null) {
 			List<OrderModel> filled = new ArrayList<OrderModel>();
 			filled.addAll(oai.getOrders());
@@ -46,10 +50,14 @@ public class OrderController {
 		return "ordermanage";
 	}
 	
+	//Remove order from database if the fill button on ordermanage page was clicked
 	@RequestMapping("deleteOrder")
 	public String deleteOrder(Model model, @RequestParam(value="ordernumber") Long ordernumber,@ModelAttribute("searchform") SearchForm searchform) {
 		logger.info(MessUtil.enter("deleteOrder", "deleteOrder"));
 		oai.deleteOrder(ordernumber);
+		
+		//Update ordercart based on search term
+		//or fill ordercart with remaining orders if there was no search
 		if(searchform.getSearch()==null) {
 			List<OrderModel> filled = new ArrayList<OrderModel>();
 			filled.addAll(oai.getOrders());

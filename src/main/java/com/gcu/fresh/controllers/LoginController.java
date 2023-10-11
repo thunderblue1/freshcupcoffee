@@ -36,7 +36,7 @@ public class LoginController {
 		return "login";
 	}
 
-	//This takes the user to the product page
+	//This takes the user to the manage page
 	//or back to login if the form has errors
     @RequestMapping("/goToManage")
     public String display(Model model)
