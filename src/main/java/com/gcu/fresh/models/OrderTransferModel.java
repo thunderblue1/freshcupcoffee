@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+//Used for creating, reading or deleting orders from the database
 @Table("order")
 public class OrderTransferModel {
 	@Column("order_number")

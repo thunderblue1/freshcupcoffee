@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+//Used with form and various places for logging in
 @Table("user")
 public class UserModel {
 	@Column("user_id")

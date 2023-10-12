@@ -10,7 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.gcu.fresh.models.LoginModel;
+
+import com.gcu.fresh.models.UserModel;
 import com.gcu.fresh.services.LoginDataService;
 
 import utility.MessUtil;
@@ -31,7 +32,7 @@ public class LoginController {
 	public String login(Model model)
 	{
     	logger.info(MessUtil.enter("login", "login"));
-		model.addAttribute("loginModel", new LoginModel());
+		model.addAttribute("loginModel", new UserModel());
 		logger.info(MessUtil.exitLoading("login", "/login","login"));
 		return "login";
 	}
