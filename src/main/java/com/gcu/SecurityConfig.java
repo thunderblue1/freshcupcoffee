@@ -50,6 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		//Pass service as callback function to userDetailsService and encrypt password
-		auth.userDetailsService(service);//.passwordEncoder(passwordEncoder);
+		auth.userDetailsService(service).passwordEncoder(passwordEncoder);
 	}
 }
