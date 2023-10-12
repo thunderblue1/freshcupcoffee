@@ -9,6 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+//Used for creating, reading, updating or deleting product records from the database
 @Table("item")
 public class ProductModel {
 	@Column("item_number")

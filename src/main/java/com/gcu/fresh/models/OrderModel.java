@@ -1,5 +1,6 @@
 package com.gcu.fresh.models;
 
+//Used for displaying orders
 public class OrderModel {
 	private Long itemNumber;
 	private Long purchaseNumber;

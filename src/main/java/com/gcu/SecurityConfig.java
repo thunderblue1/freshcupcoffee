@@ -27,8 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//Allow REST API, login and registration to be permitted and nothing else
-		http.csrf().disable()
-		//.httpBasic().and()			
+		http.csrf().disable()			
 		.authorizeRequests()
 			.antMatchers("/","/img/**","/css/**","/about","/shopping","/shoppingcart","/addToCart","/removeAllFromCart","/removeOneFromCart","/addOneMore","/createPurchase","/thankyou").permitAll()
 			.antMatchers("/manage").hasAuthority("ADMIN")
@@ -51,6 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		//Pass service as callback function to userDetailsService and encrypt password
-		auth.userDetailsService(service);//.passwordEncoder(passwordEncoder);
+		auth.userDetailsService(service).passwordEncoder(passwordEncoder);
 	}
 }

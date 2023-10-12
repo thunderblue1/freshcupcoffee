@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import com.gcu.fresh.models.UserModel;
 @Service
 public class LoginDataService implements LoginAccessInterface {
 
+	public static Logger logger = LoggerFactory.getLogger(LoginDataService.class);
+	
 	//Template for executing SQL queries
 	@Autowired
     private JdbcTemplate jdbcTemplate;

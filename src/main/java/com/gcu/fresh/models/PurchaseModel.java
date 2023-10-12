@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+//Used to create or read a purchase
 @Table("purchase")
 public class PurchaseModel {
 	@Column("purchase_number")
