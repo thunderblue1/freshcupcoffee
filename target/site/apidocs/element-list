@@ -1,0 +1,9 @@
+com.gcu
+com.gcu.fresh
+com.gcu.fresh.controllers
+com.gcu.fresh.data
+com.gcu.fresh.mapper
+com.gcu.fresh.models
+com.gcu.fresh.repository
+com.gcu.fresh.services
+utility
